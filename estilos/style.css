@@ -51,15 +51,29 @@ body{
     background: darkred;
     border-radius: 5px;
     height: 40px;
+    width: 100px;
     border: none;
     padding: 0px 15px;
-    margin-top: 5px;
+    margin-top: 20px;
     color: white;
     font-size: 15px;
     cursor: pointer;
     float: right;
     font-weight: 700;
-    margin-right: 5px;
+    
+}
+#removerTodasTarefas{
+    background: darkred;
+    border-radius: 5px;
+    height: 40px;
+    width: 100px;
+    border: none;
+    padding: 0px 15px;
+    margin-top: 20px;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    font-weight: 700;
 }
 
 .botao-foguete {
@@ -74,6 +88,24 @@ body{
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
 }
+
+.botao-delete {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.item-tarefa:hover .botao-delete {
+    opacity: 1;
+}
+
+
 .fa-rocket{
     color: aqua;
 }
@@ -81,15 +113,23 @@ body{
 #botão-adicionar:hover{
     background: rgb(0, 91, 107);
     opacity: 0.8;
+    transition: 0.5s;
 }
 
 #botão-adicionar:active{
     background: rgb(0, 44, 190);
     opacity: 0.6;
+    transition: 0.5s;
 
 }
 #botão-remover:hover{
     background: red;
+    transition: 0.5s;
+}
+
+#removerTodasTarefas:hover{
+    background: red;
+    transition: 0.5s;
 }
 
 
@@ -112,10 +152,12 @@ body{
     margin-top: 30px;
 }
 
-.nome-tarefa{
+nome-tarefa{
+
     color: white;
     font-size: 15px;
 }
+
 
 .fa-trash{
     color: red;
