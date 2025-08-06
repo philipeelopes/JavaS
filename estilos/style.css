@@ -176,3 +176,9 @@ nome-tarefa{
    text-decoration: line-through;
 }
 
+.tarefa.concluida {
+    text-decoration: line-through;
+    color: gray;
+    opacity: 0.7;
+}
+

@@ -21,10 +21,11 @@ function cliqueBotao(){
 function mostrarTarefas(){
     let novaLista = ""
 
-    arryDeTarefas.forEach(tarefa => {
-        novaLista = novaLista + `
+    arryDeTarefas.forEach((tarefa, index) => {
+        novaLista  +=`
             <li class="item-tarefa">
-                <p class="nome-tarefa">${tarefa}</p>
+                 <input type="checkbox" id="check-${index}" ${tarefa.concluida ? "checked" : ""} onchange="toggleConcluida(${index})" />
+                <label for="check-${index}" class="nome-tarefa ${tarefa.concluida ? "tarefa-concluida" : ""}">${tarefa.texto}</label>
                 <button class="botao-delete" onclick="removerTarefa(${index})">
                 <i class="fa fa-trash"></i>
                 </button>
@@ -32,10 +33,15 @@ function mostrarTarefas(){
             </li>
 
         `;
-        
+    
+    
+}); 
+   listaDeTarefas.innerHTML = novaLista;
+}
 
-    }); 
-   listaDeTarefas.innerHTML = novaLista
+function toggleConcluida(index) {
+    arryDeTarefas[index].concluida = !arryDeTarefas[index].concluida;
+    mostrarTarefas(); 
     
 }
 function removerTarefa(index){
@@ -54,6 +60,8 @@ function removerTodasTarefas(){
     mostrarTarefas();
 }
 
+
+
 button.addEventListener("click", cliqueBotao);
 
 button2.addEventListener("click", removerUltimaTarefa);
@@ -62,4 +70,5 @@ button3.addEventListener("click", removerTodasTarefas);
 
 window.removerTarefa = removerTarefa;
 
+window.toggleConcluida = toggleConcluida;
 
