@@ -1,74 +1,74 @@
-let input = document.getElementById("input-principal")
-let button = document.getElementById("botão-adicionar")
-let button2 = document.getElementById("botão-remover")
-let button3 = document.getElementById("removerTodasTarefas")
-let listaDeTarefas = document.getElementById("tarefas")
+let input = document.getElementById("input-principal");
+let botaoAdicionar = document.getElementById("botao-adicionar");
+let botaoLimparTodas = document.getElementById("removerTodasTarefas");
+let botaoRemoverMarcadas = document.getElementById("RemoverTarefasMarcadas");
+let listaDeTarefas = document.getElementById("tarefas");
 
-let arryDeTarefas = []
+let arrayDeTarefas = [];
 
-
-
-
-
-
-
-
-function cliqueBotao(){
-    arryDeTarefas.push(input.value)
-      input.value = ""
-    mostrarTarefas()
+function cliqueBotao() {
+    if (input.value.trim() === "") return;
+    arrayDeTarefas.push({
+        texto: input.value,
+        concluida: false
+    });
+    input.value = "";
+    mostrarTarefas();
 }
-function mostrarTarefas(){
-    let novaLista = ""
 
-    arryDeTarefas.forEach((tarefa, index) => {
-        novaLista  +=`
-            <li class="item-tarefa">
-                 <input type="checkbox" id="check-${index}" ${tarefa.concluida ? "checked" : ""} onchange="toggleConcluida(${index})" />
-                <label for="check-${index}" class="nome-tarefa ${tarefa.concluida ? "tarefa-concluida" : ""}">${tarefa.texto}</label>
-                <button class="botao-delete" onclick="removerTarefa(${index})">
-                <i class="fa fa-trash"></i>
-                </button>
+function mostrarTarefas() {
+    listaDeTarefas.innerHTML = "";
 
-            </li>
+    arrayDeTarefas.forEach((tarefa, index) => {
+        let li = document.createElement("li");
+        li.classList.add("item-tarefa");
 
-        `;
-    
-    
-}); 
-   listaDeTarefas.innerHTML = novaLista;
+        let checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = tarefa.concluida;
+        checkbox.addEventListener("change", () => toggleConcluida(index));
+
+        let label = document.createElement("label");
+        label.textContent = tarefa.texto;
+        label.classList.add("nome-tarefa");
+        if (tarefa.concluida) {
+            label.classList.add("tarefa-concluida");
+        }
+
+        let botaoDelete = document.createElement("button");
+        botaoDelete.classList.add("botao-delete");
+        botaoDelete.innerHTML = `<i class="fa fa-trash"></i>`;
+        botaoDelete.addEventListener("click", () => removerTarefa(index));
+
+        li.appendChild(checkbox);
+        li.appendChild(label);
+        li.appendChild(botaoDelete);
+
+        listaDeTarefas.appendChild(li);
+    });
 }
 
 function toggleConcluida(index) {
-    arryDeTarefas[index].concluida = !arryDeTarefas[index].concluida;
-    mostrarTarefas(); 
-    
-}
-function removerTarefa(index){
-    arryDeTarefas.splice(index, 1);
+    arrayDeTarefas[index].concluida = !arrayDeTarefas[index].concluida;
     mostrarTarefas();
 }
 
 
-function removerUltimaTarefa(){
-arryDeTarefas.pop();
-mostrarTarefas();
-}
-
-function removerTodasTarefas(){
-    arryDeTarefas = []
+function removerUltimaTarefa() {
+    arrayDeTarefas.pop();
     mostrarTarefas();
 }
 
+function removerTodasTarefas() {
+    arrayDeTarefas = [];
+    mostrarTarefas();
+}
 
+function RemoverTarefasMarcadas(){
+    arrayDeTarefas = arrayDeTarefas.filter(tarefa => !tarefa.concluida);
+    mostrarTarefas();
+}
 
-button.addEventListener("click", cliqueBotao);
-
-button2.addEventListener("click", removerUltimaTarefa);
-
-button3.addEventListener("click", removerTodasTarefas);
-
-window.removerTarefa = removerTarefa;
-
-window.toggleConcluida = toggleConcluida;
-
+botaoAdicionar.addEventListener("click", cliqueBotao);
+botaoLimparTodas.addEventListener("click", removerTodasTarefas);
+botaoRemoverMarcadas.addEventListener("click", RemoverTarefasMarcadas);
